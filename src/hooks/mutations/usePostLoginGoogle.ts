@@ -1,24 +1,24 @@
 import { useMutation } from '@tanstack/react-query';
-import type { MutationOpts, SessionUser } from '../../utils/types';
-import { client } from '../../services/client';
+import type { MutationOpts } from '../../utils/types';
+import { useAPI } from '../useAPI';
+import type { Api } from '../../api/api';
+
+type LoginGoogleFn = Api<unknown>['auth']['createLoginWithGoogle'];
 
 export function usePostLoginGoogle({
   mutationKey = [],
   ...props
 }: MutationOpts<
-  {
-    data: {
-      user: SessionUser;
-      access_token: string;
-    };
-  },
-  string
+  Awaited<ReturnType<LoginGoogleFn>>['data'],
+  Parameters<LoginGoogleFn>[0]['code']
 > = {}) {
+  const api = useAPI();
+
   return useMutation({
     ...props,
     mutationKey: ['LOGIN_GOOGLE_MUTATION', ...mutationKey],
     mutationFn: async (code) => {
-      const response = await client.post('/v1/auth/login/google', {
+      const response = await api.auth.createLoginWithGoogle({
         code,
       });
 
