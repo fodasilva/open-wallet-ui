@@ -1,21 +1,19 @@
 import { useState, type FC } from 'react';
 import { AsyncSelect, type Option } from './commons/select/AsyncSelect';
 import { useQuery } from '@tanstack/react-query';
-import { categoriesKeys, getCategoriesQueryOpts } from '../queries/categories-queries';
-import type { CategoriesService } from '../services/CategoriesService';
+import {
+  categoriesKeys,
+  getCategoriesQueryOpts,
+  type Category,
+} from '../queries/categories-queries';
 import { useDebounce } from '../hooks/useDebounce';
 import { SaveCategoryDialog } from '../pages/categories/components/SaveCategoryDialog';
 import { usePostCategory } from '../hooks/mutations/usePostCategory';
+import { useAPI } from '../hooks/useAPI';
 
 interface Props {
-  selected?: Option<
-    Awaited<ReturnType<typeof CategoriesService.getCategories>>['data']['categories'][number]
-  > | null;
-  onChange?: (
-    value: Option<
-      Awaited<ReturnType<typeof CategoriesService.getCategories>>['data']['categories'][number]
-    > | null,
-  ) => void;
+  selected?: Option<Category> | null;
+  onChange?: (value: Option<Category> | null) => void;
   isCreatable?: boolean;
 }
 
@@ -27,19 +25,20 @@ export const AsyncSelectCategory: FC<Props> = ({
   const [search, setSearch] = useState<string>('');
   const [creatingName, setCreatingName] = useState<string>('');
   const [addCategoryVisible, setAddCategoryVisible] = useState(false);
+  const api = useAPI();
 
   const debouncedSearch = useDebounce(search, 500);
 
   const { data, isFetching } = useQuery({
-    ...getCategoriesQueryOpts({
+    ...getCategoriesQueryOpts(api, {
       name: debouncedSearch,
     }),
     select: (data) =>
-      data.data.categories.map((category) => ({
-        id: category.id,
-        value: category,
-        label: category.name,
-      })),
+      data.data?.categories?.map((category) => ({
+        id: category.id!,
+        value: category as Category,
+        label: category.name!,
+      })) || [],
   });
 
   const { mutateAsync: postCategory, isPending } = usePostCategory({
@@ -80,11 +79,13 @@ export const AsyncSelectCategory: FC<Props> = ({
               },
               {
                 onSuccess: (result) => {
-                  const category = result.data.category;
+                  const category = result?.data?.category;
+                  if (!category) return;
+
                   const option = {
-                    id: category.id,
-                    value: category,
-                    label: category.name,
+                    id: category.id!,
+                    value: category as Category,
+                    label: category.name!,
                   };
 
                   onChange(option);

@@ -18,7 +18,7 @@ import { NumericInput } from '../../../components/commons/input/NumericInput';
 import { formatCurrency, parseUSD } from '../../../utils/functions';
 import dayjs from 'dayjs';
 import { AsyncSelectCategory } from '../../../components/AsyncSelectCategory';
-import type { CategoriesService } from '../../../services/CategoriesService';
+import { type Category } from '../../../queries/categories-queries';
 import type { Option } from '../../../components/commons/select/AsyncSelect';
 import { Form } from '../../../components/commons/Form';
 import { useState } from 'react';
@@ -45,9 +45,7 @@ const schema = z.object({
 });
 
 type Form = Omit<z.infer<typeof schema>, 'category'> & {
-  category: Option<
-    Awaited<ReturnType<typeof CategoriesService.getCategories>>['data']['categories'][number]
-  > | null;
+  category: Option<Category> | null;
 };
 
 const initialDefaultValues: Form = {

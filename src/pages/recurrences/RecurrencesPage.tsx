@@ -34,12 +34,12 @@ export const RecurrencesPage: FC = () => {
                 postRecurrence(
                   {
                     name: data.name,
-                    category_id: data.category?.id || null,
-                    note: data.note || null,
+                    category_id: data.category?.id || undefined,
+                    note: data.note || undefined,
                     amount: parseUSD(data.amount) * -1,
                     day_of_month: parseInt(data.day_of_month, 10),
                     start_period: data.start_period,
-                    end_period: data.end_period,
+                    end_period: data.end_period || undefined,
                   },
                   {
                     onSuccess: () => {

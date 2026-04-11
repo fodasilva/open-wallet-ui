@@ -10,12 +10,15 @@ import { usePatchRecurrence } from '../../../hooks/mutations/usePatchRecurrence'
 import { useEffect, useRef, useState, type ComponentProps } from 'react';
 import { formatCurrency } from '../../../utils/functions';
 import { DataTable } from '../../../components/commons/DataTable';
-import { RecurrencesService } from '../../../services/RecurrencesService';
 import { Spinner } from '../../../components/commons/loader/Spinner';
 import { parseUSD } from '../../../utils/functions';
 import { DeleteRecurrenceModal } from './DeleteRecurrenceModal';
 
+import { useAPI } from '../../../hooks/useAPI';
+import type { Recurrence } from '../../../queries/recurrences-queries';
+
 export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => {
+  const api = useAPI();
   const [isEditing, setIsEditing] = useState<{
     id: string;
     defaultValues: NonNullable<ComponentProps<typeof SaveRecurrenceDialog>['defaultValues']>;
@@ -29,18 +32,20 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
     hasNextPage,
     isFetchingNextPage,
   } = useSuspenseInfiniteQuery({
-    queryKey: recurrencesKeys.all(),
+    queryKey: [...recurrencesKeys.all(), api],
     queryFn: ({ pageParam = 1 }) =>
-      RecurrencesService.getRecurrences({
-        per_page: 25,
-        page: pageParam,
-        order_by: 'created_at:desc',
-      }),
+      api.recurrences
+        .listRecurrences({
+          per_page: 25,
+          page: pageParam as number,
+          order_by: 'created_at:desc',
+        } as Parameters<typeof api.recurrences.listRecurrences>[0])
+        .then((res) => res.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
-      return lastPage.query.next_page ? lastPage.query.page + 1 : undefined;
+      return lastPage.query?.next_page ? (lastPage.query.page || 0) + 1 : undefined;
     },
-    select: (data) => data.pages.flatMap((page) => page.data.recurrences),
+    select: (data) => data.pages.flatMap((page) => (page.data?.recurrences || []) as Recurrence[]),
   });
 
   useEffect(() => {
@@ -103,7 +108,7 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
                       {Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
-                      }).format(row.amount)}
+                      }).format(row.amount!)}
                     </span>
                   ),
                 },
@@ -137,11 +142,11 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
                         variant="outlined"
                         onClick={() => {
                           setIsEditing({
-                            id: row.id,
+                            id: row.id!,
                             defaultValues: {
-                              name: row.name,
-                              amount: formatCurrency(Math.abs(row.amount)),
-                              day_of_month: row.day_of_month.toString(),
+                              name: row.name!,
+                              amount: formatCurrency(Math.abs(row.amount!)),
+                              day_of_month: row.day_of_month!.toString(),
                               start_period: row.start_period || dayjs().format('YYYYMM'),
                               end_period: row.end_period,
                               note: row.note ?? '',
@@ -165,7 +170,7 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
                       <Button
                         size="sm"
                         variant="outlined"
-                        onClick={() => setDeletingRecurrenceId(row.id)}
+                        onClick={() => setDeletingRecurrenceId(row.id!)}
                       >
                         <TrashIcon className="size-4" />
                       </Button>
@@ -199,12 +204,12 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
                   recurrenceId: isEditing.id,
                   payload: {
                     name: data.name,
-                    category_id: data.category?.id || null,
-                    note: data.note || null,
+                    category_id: data.category?.id || undefined,
+                    note: data.note || undefined,
                     amount: parseUSD(data.amount) * -1,
                     day_of_month: parseInt(data.day_of_month, 10),
                     start_period: data.start_period,
-                    end_period: data.end_period,
+                    end_period: data.end_period || undefined,
                   },
                 },
                 {
