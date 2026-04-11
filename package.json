@@ -11,7 +11,8 @@
     "check:format": "prettier --check .",
     "check:types": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
     "check:all": "npm run lint && npm run check:format && npm run check:types",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dev:gen-client": "npx swagger-typescript-api generate -p http://localhost:8080/api-docs/doc.json -o ./src/api -n api.ts --http-client fetch --module-name-first-tag"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

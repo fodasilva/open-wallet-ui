@@ -19,6 +19,7 @@ import * as PrimitiveTooltip from '@radix-ui/react-tooltip';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { RecurrencesPage } from './pages/recurrences/RecurrencesPage';
 import { DialogLoader } from './components/DialogLoader';
+import { ApiProvider } from './providers/ApiProvider';
 
 declare module '@tanstack/react-query' {
   interface Register {
@@ -68,24 +69,26 @@ function App() {
   if (!sessionIsSettled) return null;
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <PrimitiveTooltip.Provider delayDuration={300}>
-        <Toaster richColors position="bottom-left" />
-        <Routes>
-          <Route path={ROUTES.LOGIN} element={<LoginPage />} />
-          <Route element={<Layout />}>
-            <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
-            <Route path={ROUTES.WALLET.INDEX} element={<WalletPage />} />
-            <Route path={ROUTES.WALLET.NEW_TRANSACTION} element={<NewTransactionPage />} />
-            <Route path={ROUTES.HOME} element={<WalletPage />} />
-            <Route path={ROUTES.CATEGORIES.INDEX} element={<CategoriesPage />} />
-            <Route path={ROUTES.RECURRENCES.INDEX} element={<RecurrencesPage />} />
-          </Route>
-        </Routes>
-        <DialogLoader />
-        <ConfirmDialog />
-      </PrimitiveTooltip.Provider>
-    </QueryClientProvider>
+    <ApiProvider>
+      <QueryClientProvider client={queryClient}>
+        <PrimitiveTooltip.Provider delayDuration={300}>
+          <Toaster richColors position="bottom-left" />
+          <Routes>
+            <Route path={ROUTES.LOGIN} element={<LoginPage />} />
+            <Route element={<Layout />}>
+              <Route path={ROUTES.DASHBOARD} element={<DashboardPage />} />
+              <Route path={ROUTES.WALLET.INDEX} element={<WalletPage />} />
+              <Route path={ROUTES.WALLET.NEW_TRANSACTION} element={<NewTransactionPage />} />
+              <Route path={ROUTES.HOME} element={<WalletPage />} />
+              <Route path={ROUTES.CATEGORIES.INDEX} element={<CategoriesPage />} />
+              <Route path={ROUTES.RECURRENCES.INDEX} element={<RecurrencesPage />} />
+            </Route>
+          </Routes>
+          <DialogLoader />
+          <ConfirmDialog />
+        </PrimitiveTooltip.Provider>
+      </QueryClientProvider>
+    </ApiProvider>
   );
 }
 
