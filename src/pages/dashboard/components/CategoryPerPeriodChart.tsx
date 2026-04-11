@@ -4,12 +4,15 @@ import { useSuspenseQuery } from '@tanstack/react-query';
 import { getCategoriesPerPeriodQueryOpts } from '../../../queries/categories-queries';
 import { usePeriod } from '../../../hooks/usePeriod';
 import dayjs from 'dayjs';
+import { useAPI } from '../../../hooks/useAPI';
 
 export const CategoryPerPeriod: FC = () => {
   const { period } = usePeriod();
+  const api = useAPI();
 
   const { data } = useSuspenseQuery({
     ...getCategoriesPerPeriodQueryOpts(
+      api,
       dayjs().month(period.month).year(period.year).format('YYYYMM'),
       {
         per_page: 100,
@@ -18,7 +21,8 @@ export const CategoryPerPeriod: FC = () => {
     ),
   });
 
-  const filteredData = data.data.categories.filter((item) => item.total_amount < 0);
+  const categories = data.data?.categories || [];
+  const filteredData = categories.filter((item) => item.total_amount! < 0);
 
   const option = {
     tooltip: {
@@ -65,10 +69,10 @@ export const CategoryPerPeriod: FC = () => {
           show: false,
         },
         data: filteredData.map((category) => ({
-          value: Math.abs(category.total_amount),
-          name: category.name,
+          value: Math.abs(category.total_amount!),
+          name: category.name!,
           itemStyle: {
-            color: category.color,
+            color: category.color!,
           },
           label: {
             formatter: (params: { value: number }) =>
