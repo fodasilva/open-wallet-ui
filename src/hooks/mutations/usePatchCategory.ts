@@ -1,17 +1,23 @@
 import { useMutation } from '@tanstack/react-query';
 import type { MutationOpts } from '../../utils/types';
-import { CategoriesService } from '../../services/CategoriesService';
+import { useAPI } from '../useAPI';
+import type { Api } from '../../api/api';
+
+type PatchCategoryFn = Api<unknown>['categories']['updateCategory'];
 
 export function usePatchCategory({
   mutationKey = [],
   ...props
 }: MutationOpts<
-  Awaited<ReturnType<typeof CategoriesService.patchCategory>>,
-  Parameters<typeof CategoriesService.patchCategory>[0]
+  Awaited<ReturnType<PatchCategoryFn>>['data'],
+  { id: Parameters<PatchCategoryFn>[0]; payload: Parameters<PatchCategoryFn>[1] }
 > = {}) {
+  const api = useAPI();
+
   return useMutation({
     ...props,
     mutationKey: ['PATCH_CATEGORY_MUTATION', ...mutationKey],
-    mutationFn: CategoriesService.patchCategory,
+    mutationFn: ({ id, payload }) =>
+      api.categories.updateCategory(id, payload).then((res) => res.data),
   });
 }

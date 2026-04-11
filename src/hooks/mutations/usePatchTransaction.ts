@@ -1,17 +1,26 @@
 import { useMutation } from '@tanstack/react-query';
 import type { MutationOpts } from '../../utils/types';
-import { TransactionsService } from '../../services/TransactionsService';
+import { useAPI } from '../useAPI';
+import type { Api } from '../../api/api';
+
+type PatchTransactionFn = Api<unknown>['transactions']['updateTransaction'];
+type PayloadType = NonNullable<Parameters<PatchTransactionFn>[1]>;
 
 export function usePatchTransaction({
   mutationKey = [],
   ...props
 }: MutationOpts<
-  Awaited<ReturnType<typeof TransactionsService.patchTransaction>>,
-  Parameters<typeof TransactionsService.patchTransaction>[0]
+  Awaited<ReturnType<PatchTransactionFn>>['data'],
+  { transactionId: Parameters<PatchTransactionFn>[0]; payload: Partial<PayloadType> }
 > = {}) {
+  const api = useAPI();
+
   return useMutation({
     ...props,
     mutationKey: ['PATCH_TRANSACTION_MUTATION', ...mutationKey],
-    mutationFn: TransactionsService.patchTransaction,
+    mutationFn: ({ transactionId, payload }) =>
+      api.transactions
+        .updateTransaction(transactionId, payload as Parameters<PatchTransactionFn>[1])
+        .then((res) => res.data),
   });
 }
