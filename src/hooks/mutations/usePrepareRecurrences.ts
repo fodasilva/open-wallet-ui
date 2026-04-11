@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { RecurrencesService } from '../../services/RecurrencesService';
+import { useAPI } from '../useAPI';
 
 export function usePrepareRecurrences({
   onSuccess,
@@ -8,8 +8,11 @@ export function usePrepareRecurrences({
   onSuccess?: () => void;
   meta?: Record<string, unknown>;
 } = {}) {
+  const api = useAPI();
+
   return useMutation({
-    mutationFn: RecurrencesService.prepareRecurrences,
+    mutationFn: (period: string) =>
+      api.recurrences.prepareRecurrences(period).then((res) => res.data),
     onSuccess,
     meta,
   });

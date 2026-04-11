@@ -2,7 +2,6 @@ import { useEffect, useRef, useState, type ComponentProps, type FC } from 'react
 import { useQueryClient, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
 import { entriesKeys } from '../../../queries/transactions-queries';
 import dayjs from 'dayjs';
-import { TransactionsService } from '../../../services/TransactionsService';
 import { useConfirm } from '../../../hooks/useConfirm';
 import { useDeleteTransaction } from '../../../hooks/mutations/useDeleteTransaction';
 import { Card } from '../../../components/commons/Card';
@@ -19,9 +18,12 @@ import { createFilter } from '../../../utils/filter';
 import { SaveInstallmentDialog } from './SaveInstallmentDialog';
 import { usePatchTransaction } from '../../../hooks/mutations/usePatchTransaction';
 import { Spinner } from '../../../components/commons/loader/Spinner';
-import { RecurrencesService } from '../../../services/RecurrencesService';
+
+import { useAPI } from '../../../hooks/useAPI';
+import type { Entry, ListEntriesResponse } from '../../../queries/transactions-queries';
 
 export const EntriesList: FC = () => {
+  const api = useAPI();
   const [isEditingExpense, setIsEditingExpense] = useState<{
     id: string;
     defaultValues: NonNullable<ComponentProps<typeof SaveSimpleExpenseDialog>['defaultValues']>;
@@ -45,7 +47,7 @@ export const EntriesList: FC = () => {
   useSuspenseQuery({
     queryKey: ['recurrences', 'prepare', periodFormatted],
     queryFn: async () => {
-      await RecurrencesService.prepareRecurrences(periodFormatted);
+      await api.recurrences.prepareRecurrences(periodFormatted);
       return true;
     },
   });
@@ -68,31 +70,30 @@ export const EntriesList: FC = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useSuspenseInfiniteQuery({
-    queryKey: [...entriesKeys.all(), periodFormatted],
+    queryKey: [...entriesKeys.all(), periodFormatted, api],
     queryFn: ({ pageParam = 1 }) =>
-      TransactionsService.getEntries({
-        per_page: 25,
-        page: pageParam,
-        filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
-        order_by: 'reference_date:desc,created_at:desc',
-      }),
+      api.transactions
+        .listEntries({
+          per_page: 25,
+          page: pageParam as number,
+          filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
+          order_by: 'reference_date:desc,created_at:desc',
+        } as Parameters<typeof api.transactions.listEntries>[0])
+        .then((res) => res.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {
-      return lastPage.query.next_page ? lastPage.query.page + 1 : undefined;
+      return lastPage.query?.next_page ? (lastPage.query.page || 0) + 1 : undefined;
     },
     select: (data) => {
-      const entries = data.pages.flatMap((page) => page.data.entries);
+      const entries = data.pages.flatMap((page) => page.data?.entries || []);
 
-      const entriesPerDate: Record<
-        string,
-        Awaited<ReturnType<typeof TransactionsService.getEntries>>['data']['entries'][number][]
-      > = {};
+      const entriesPerDate: Record<string, Entry[]> = {};
       entries.forEach((entry) => {
-        const date = entry.reference_date.slice(0, 10);
+        const date = entry.reference_date!.slice(0, 10);
         if (!entriesPerDate[date]) {
-          entriesPerDate[date] = [entry];
+          entriesPerDate[date] = [entry as Entry];
         } else {
-          entriesPerDate[date] = [...entriesPerDate[date], entry];
+          entriesPerDate[date] = [...entriesPerDate[date], entry as Entry];
         }
       });
 
@@ -133,19 +134,16 @@ export const EntriesList: FC = () => {
 
       const previousData = queryClient.getQueryData(queryKey);
 
-      queryClient.setQueryData<Awaited<ReturnType<typeof TransactionsService.getEntries>>>(
-        queryKey,
-        (old) => {
-          if (!old) return old;
-          return {
-            ...old,
-            data: {
-              ...old.data,
-              entries: old.data.entries.filter((entry) => entry.transaction_id !== id),
-            },
-          };
-        },
-      );
+      queryClient.setQueryData<ListEntriesResponse>(queryKey, (old) => {
+        if (!old) return old;
+        return {
+          ...old,
+          data: {
+            ...old.data,
+            entries: old.data?.entries?.filter((entry) => entry.transaction_id !== id),
+          },
+        };
+      });
 
       return {
         previousData,
@@ -155,7 +153,7 @@ export const EntriesList: FC = () => {
     onError: (_err, _id, context) => {
       const ctx = context as
         | {
-            previousData?: Awaited<ReturnType<typeof TransactionsService.getEntries>>;
+            previousData?: ListEntriesResponse;
             queryKey?: readonly unknown[];
           }
         | undefined;
@@ -171,9 +169,7 @@ export const EntriesList: FC = () => {
 
   const entries = Object.entries(entriesData);
 
-  function getEntryData(
-    entry: Awaited<ReturnType<typeof TransactionsService.getEntries>>['data']['entries'][number],
-  ) {
+  function getEntryData(entry: Entry) {
     return {
       category() {
         if (entry.category_id) {
@@ -207,7 +203,7 @@ export const EntriesList: FC = () => {
         return Intl.NumberFormat('en-US', {
           style: 'currency',
           currency: 'USD',
-        }).format(entry.amount);
+        }).format(entry.amount!);
       },
       actions() {
         return (
@@ -219,10 +215,10 @@ export const EntriesList: FC = () => {
                 switch (entry.type) {
                   case 'simple_expense': {
                     const defaultValues = {
-                      name: entry.name,
-                      amount: formatCurrency(Math.abs(entry.amount)),
+                      name: entry.name!,
+                      amount: formatCurrency(Math.abs(entry.amount!)),
                       description: entry.description || '',
-                      date: entry.reference_date.substring(0, 10),
+                      date: entry.reference_date!.substring(0, 10),
                       category: null,
                     };
                     if (entry.category_id) {
@@ -239,17 +235,17 @@ export const EntriesList: FC = () => {
                       });
                     }
                     setIsEditingExpense({
-                      id: entry.transaction_id,
+                      id: entry.transaction_id!,
                       defaultValues,
                     });
                     break;
                   }
                   case 'income': {
                     const defaultValues = {
-                      name: entry.name,
-                      amount: formatCurrency(Math.abs(entry.amount)),
+                      name: entry.name!,
+                      amount: formatCurrency(Math.abs(entry.amount!)),
                       description: entry.description || '',
-                      date: entry.reference_date.substring(0, 10),
+                      date: entry.reference_date!.substring(0, 10),
                       category: null,
                     };
                     if (entry.category_id) {
@@ -266,18 +262,18 @@ export const EntriesList: FC = () => {
                       });
                     }
                     setIsEditingIncome({
-                      id: entry.transaction_id,
+                      id: entry.transaction_id!,
                       defaultValues,
                     });
                     break;
                   }
                   case 'installment': {
                     const defaultValues = {
-                      amount: formatCurrency(Math.abs(entry.total_amount)),
-                      name: entry.name,
+                      amount: formatCurrency(Math.abs(entry.total_amount!)),
+                      name: entry.name!,
                       note: entry.description || '',
-                      installments: entry.total_installments.toString(),
-                      reference_date: entry.reference_date,
+                      installments: entry.total_installments!.toString(),
+                      reference_date: entry.reference_date!,
                       category: null,
                     };
                     if (entry.category_id) {
@@ -294,7 +290,7 @@ export const EntriesList: FC = () => {
                       });
                     }
                     setIsEditingInstallment({
-                      transaction_id: entry.transaction_id,
+                      transaction_id: entry.transaction_id!,
                       defaultValues,
                     });
                     break;
@@ -313,7 +309,7 @@ export const EntriesList: FC = () => {
                 confirm.add(
                   'Delete Transaction',
                   'This action will delete this entry and all other entries related to it. Are you sure? This action cannot be undone.',
-                  () => deleteTransaction(entry.transaction_id),
+                  () => deleteTransaction(entry.transaction_id!),
                 )
               }
             >
@@ -355,7 +351,7 @@ export const EntriesList: FC = () => {
                           <td
                             className={cn(
                               'w-[10%] text-right font-medium',
-                              entry.amount < 0 ? 'text-red-400' : 'text-green-500',
+                              entry.amount! < 0 ? 'text-red-400' : 'text-green-500',
                               padding,
                             )}
                           >
@@ -392,7 +388,7 @@ export const EntriesList: FC = () => {
                           <span
                             className={cn(
                               'whitespace-nowrap',
-                              entry.amount < 0 ? 'text-red-400' : 'text-green-500',
+                              entry.amount! < 0 ? 'text-red-400' : 'text-green-500',
                             )}
                           >
                             {data.amount()}
