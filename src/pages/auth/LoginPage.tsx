@@ -4,6 +4,7 @@ import { Link, useNavigate, useSearchParams } from 'react-router';
 import { LINKS } from '../../constants/links';
 import { env } from '../../utils/functions';
 import { useSession } from '../../hooks/useSession';
+import type { SessionUser } from '../../utils/types';
 import { ROUTES } from '../../constants/routes';
 import { toast } from 'sonner';
 import { usePostLoginGoogle } from '../../hooks/mutations/usePostLoginGoogle';
@@ -18,7 +19,7 @@ export const LoginPage: FC = () => {
 
   const { mutate: loginGoogle, isPending: loginGoogleIsPending } = usePostLoginGoogle({
     onSuccess: (data) => {
-      login(data.data.user, data.data.access_token);
+      login(data.data!.user! as SessionUser, data.data!.access_token!);
       navigate(ROUTES.HOME);
     },
     onError: () => {
