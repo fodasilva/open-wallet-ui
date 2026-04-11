@@ -1,5 +1,10 @@
-import { CategoriesService } from '../services/CategoriesService';
 import type { QueryOpts } from '../utils/types';
+import type { Api } from '../api/api';
+
+type ListCategoriesFn = Api<unknown>['categories']['listCategories'];
+export type Category = NonNullable<
+  NonNullable<NonNullable<Awaited<ReturnType<ListCategoriesFn>>['data']>['data']>['categories']
+>[number];
 
 export const categoriesKeys = {
   all: () => ['categories'] as const,
@@ -8,16 +13,31 @@ export const categoriesKeys = {
     [...categoriesKeys.all(), 'PER_PERIOD', { period }, { queryOpts }] as const,
 };
 
-export function getCategoriesQueryOpts(queryOpts?: QueryOpts) {
+type ListCategoriesAmountPerPeriodFn = Api<unknown>['categories']['listCategoriesAmountPerPeriod'];
+
+export function getCategoriesQueryOpts(api: Api<unknown>, queryOpts?: QueryOpts) {
   return {
     queryKey: categoriesKeys.getCategories(queryOpts),
-    queryFn: () => CategoriesService.getCategories(queryOpts),
+    queryFn: () =>
+      api.categories
+        .listCategories(queryOpts as Parameters<ListCategoriesFn>[0])
+        .then((res) => res.data),
   };
 }
 
-export function getCategoriesPerPeriodQueryOpts(period: string, queryOpts?: QueryOpts) {
+export function getCategoriesPerPeriodQueryOpts(
+  api: Api<unknown>,
+  period: string,
+  queryOpts?: QueryOpts,
+) {
   return {
     queryKey: categoriesKeys.getCategoriesPerPeriod(period, queryOpts),
-    queryFn: () => CategoriesService.getCategoriesPerPeriod(period, queryOpts),
+    queryFn: () =>
+      api.categories
+        .listCategoriesAmountPerPeriod(
+          period,
+          queryOpts as Parameters<ListCategoriesAmountPerPeriodFn>[1],
+        )
+        .then((res) => res.data),
   };
 }
