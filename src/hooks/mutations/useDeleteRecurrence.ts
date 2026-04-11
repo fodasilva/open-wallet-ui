@@ -1,5 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { RecurrencesService } from '../../services/RecurrencesService';
+import { useAPI } from '../useAPI';
+import type { Api } from '../../api/api';
+
+type DeleteRecurrenceFn = Api<unknown>['recurrences']['deleteRecurrence'];
 
 export function useDeleteRecurrence({
   onSuccess,
@@ -8,8 +11,18 @@ export function useDeleteRecurrence({
   onSuccess?: () => void;
   meta?: Record<string, unknown>;
 } = {}) {
-  return useMutation({
-    mutationFn: RecurrencesService.deleteRecurrence,
+  const api = useAPI();
+
+  return useMutation<
+    Awaited<ReturnType<DeleteRecurrenceFn>>['data'],
+    Error,
+    {
+      id: Parameters<DeleteRecurrenceFn>[0];
+      scope?: Extract<NonNullable<Parameters<DeleteRecurrenceFn>[1]>['scope'], string>;
+    }
+  >({
+    mutationFn: ({ id, scope }) =>
+      api.recurrences.deleteRecurrence(id, { scope }).then((res) => res.data),
     onSuccess,
     meta,
   });

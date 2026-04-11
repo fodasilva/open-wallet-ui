@@ -1,5 +1,8 @@
 import { useMutation } from '@tanstack/react-query';
-import { RecurrencesService } from '../../services/RecurrencesService';
+import { useAPI } from '../useAPI';
+import type { Api } from '../../api/api';
+
+type PostRecurrenceFn = Api<unknown>['recurrences']['createRecurrence'];
 
 export function usePostRecurrence({
   onSuccess,
@@ -8,8 +11,14 @@ export function usePostRecurrence({
   onSuccess?: () => void;
   meta?: Record<string, unknown>;
 } = {}) {
-  return useMutation({
-    mutationFn: RecurrencesService.postRecurrence,
+  const api = useAPI();
+
+  return useMutation<
+    Awaited<ReturnType<PostRecurrenceFn>>['data'],
+    Error,
+    Parameters<PostRecurrenceFn>[0]
+  >({
+    mutationFn: (payload) => api.recurrences.createRecurrence(payload).then((res) => res.data),
     onSuccess,
     meta,
   });
