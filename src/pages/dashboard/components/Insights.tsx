@@ -16,7 +16,7 @@ export const Insights: FC = () => {
   useSuspenseQuery({
     queryKey: ['recurrences', 'prepare', periodFormatted],
     queryFn: async () => {
-      await api.recurrences.prepareRecurrences(periodFormatted);
+      await api.recurrences.v1PrepareRecurrence(periodFormatted);
       return true;
     },
   });

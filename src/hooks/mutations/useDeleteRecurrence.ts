@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type DeleteRecurrenceFn = Api<unknown>['recurrences']['deleteRecurrence'];
+type DeleteRecurrenceFn = Api<unknown>['recurrences']['v1DeleteRecurrence'];
 
 export function useDeleteRecurrence({
   onSuccess,
@@ -22,7 +22,7 @@ export function useDeleteRecurrence({
     }
   >({
     mutationFn: ({ id, scope }) =>
-      api.recurrences.deleteRecurrence(id, { scope }).then((res) => res.data),
+      api.recurrences.v1DeleteRecurrence(id, { scope }).then((res) => res.data),
     onSuccess,
     meta,
   });

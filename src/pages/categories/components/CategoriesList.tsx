@@ -23,11 +23,11 @@ export const CategoriesList = () => {
     queryKey: [...categoriesKeys.all(), api],
     queryFn: ({ pageParam }) =>
       api.categories
-        .listCategories({
+        .v1ListCategories({
           per_page: 25,
           page: pageParam as number,
           order_by: 'created_at',
-        } as Parameters<typeof api.categories.listCategories>[0])
+        } as Parameters<typeof api.categories.v1ListCategories>[0])
         .then((res) => res.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

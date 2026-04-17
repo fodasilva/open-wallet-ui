@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type LoginGoogleFn = Api<unknown>['auth']['createLoginWithGoogle'];
+type LoginGoogleFn = Api<unknown>['auth']['v1LoginWithGoogle'];
 
 export function usePostLoginGoogle({
   mutationKey = [],
@@ -18,7 +18,7 @@ export function usePostLoginGoogle({
     ...props,
     mutationKey: ['LOGIN_GOOGLE_MUTATION', ...mutationKey],
     mutationFn: async (code) => {
-      const response = await api.auth.createLoginWithGoogle({
+      const response = await api.auth.v1LoginWithGoogle({
         code,
       });
 

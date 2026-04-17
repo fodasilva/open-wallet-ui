@@ -12,7 +12,7 @@ export function usePrepareRecurrences({
 
   return useMutation({
     mutationFn: (period: string) =>
-      api.recurrences.prepareRecurrences(period).then((res) => res.data),
+      api.recurrences.v1PrepareRecurrence(period).then((res) => res.data),
     onSuccess,
     meta,
   });

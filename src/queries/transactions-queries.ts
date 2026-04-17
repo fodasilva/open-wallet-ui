@@ -1,7 +1,7 @@
 import type { QueryOpts } from '../utils/types';
 import type { Api } from '../api/api';
 
-type ListEntriesFn = Api<unknown>['transactions']['listEntries'];
+type ListEntriesFn = Api<unknown>['transactions']['v1ListEntries'];
 export type ListEntriesResponse = NonNullable<Awaited<ReturnType<ListEntriesFn>>['data']>;
 export type Entry = NonNullable<NonNullable<ListEntriesResponse['data']>['entries']>[number];
 
@@ -15,7 +15,7 @@ export function getEntriesQueryOpts(api: Api<unknown>, queryOpts?: QueryOpts) {
     queryKey: [...entriesKeys.getEntries(queryOpts)],
     queryFn: () =>
       api.transactions
-        .listEntries(queryOpts as Parameters<ListEntriesFn>[0])
+        .v1ListEntries(queryOpts as Parameters<ListEntriesFn>[0])
         .then((res) => res.data),
   };
 }

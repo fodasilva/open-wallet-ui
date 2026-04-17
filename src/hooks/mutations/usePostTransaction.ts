@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type PostTransactionFn = Api<unknown>['transactions']['createTransaction'];
+type PostTransactionFn = Api<unknown>['transactions']['v1CreateTransaction'];
 
 export function usePostTransaction({
   mutationKey = [],
@@ -17,6 +17,6 @@ export function usePostTransaction({
   return useMutation({
     ...props,
     mutationKey: ['POST_TRANSACTION_MUTATION', ...mutationKey],
-    mutationFn: (payload) => api.transactions.createTransaction(payload).then((res) => res.data),
+    mutationFn: (payload) => api.transactions.v1CreateTransaction(payload).then((res) => res.data),
   });
 }
