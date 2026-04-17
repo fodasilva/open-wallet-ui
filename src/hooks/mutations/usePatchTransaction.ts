@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type PatchTransactionFn = Api<unknown>['transactions']['updateTransaction'];
+type PatchTransactionFn = Api<unknown>['transactions']['v1UpdateTransaction'];
 type PayloadType = NonNullable<Parameters<PatchTransactionFn>[1]>;
 
 export function usePatchTransaction({
@@ -20,7 +20,7 @@ export function usePatchTransaction({
     mutationKey: ['PATCH_TRANSACTION_MUTATION', ...mutationKey],
     mutationFn: ({ transactionId, payload }) =>
       api.transactions
-        .updateTransaction(transactionId, payload as Parameters<PatchTransactionFn>[1])
+        .v1UpdateTransaction(transactionId, payload as Parameters<PatchTransactionFn>[1])
         .then((res) => res.data),
   });
 }

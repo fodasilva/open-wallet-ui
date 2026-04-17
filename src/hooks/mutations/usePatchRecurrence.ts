@@ -2,7 +2,7 @@ import { useMutation } from '@tanstack/react-query';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type PatchRecurrenceFn = Api<unknown>['recurrences']['updateRecurrence'];
+type PatchRecurrenceFn = Api<unknown>['recurrences']['v1UpdateRecurrence'];
 type PayloadType = NonNullable<Parameters<PatchRecurrenceFn>[1]>;
 
 export function usePatchRecurrence({
@@ -21,7 +21,7 @@ export function usePatchRecurrence({
   >({
     mutationFn: ({ recurrenceId, payload }) =>
       api.recurrences
-        .updateRecurrence(recurrenceId, payload as Parameters<PatchRecurrenceFn>[1])
+        .v1UpdateRecurrence(recurrenceId, payload as Parameters<PatchRecurrenceFn>[1])
         .then((res) => res.data),
     onSuccess,
     meta,

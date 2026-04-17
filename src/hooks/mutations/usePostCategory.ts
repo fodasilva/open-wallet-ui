@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type PostCategoryFn = Api<unknown>['categories']['createCategory'];
+type PostCategoryFn = Api<unknown>['categories']['v1CreateCategory'];
 
 export function usePostCategory({
   mutationKey = [],
@@ -14,6 +14,6 @@ export function usePostCategory({
   return useMutation({
     ...props,
     mutationKey: ['POST_CATEGORY_MUTATION', ...mutationKey],
-    mutationFn: (payload) => api.categories.createCategory(payload).then((res) => res.data),
+    mutationFn: (payload) => api.categories.v1CreateCategory(payload).then((res) => res.data),
   });
 }

@@ -47,7 +47,7 @@ export const EntriesList: FC = () => {
   useSuspenseQuery({
     queryKey: ['recurrences', 'prepare', periodFormatted],
     queryFn: async () => {
-      await api.recurrences.prepareRecurrences(periodFormatted);
+      await api.recurrences.v1PrepareRecurrence(periodFormatted);
       return true;
     },
   });
@@ -73,12 +73,12 @@ export const EntriesList: FC = () => {
     queryKey: [...entriesKeys.all(), periodFormatted, api],
     queryFn: ({ pageParam = 1 }) =>
       api.transactions
-        .listEntries({
+        .v1ListEntries({
           per_page: 25,
           page: pageParam as number,
           filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
           order_by: 'reference_date:desc,created_at:desc',
-        } as Parameters<typeof api.transactions.listEntries>[0])
+        } as Parameters<typeof api.transactions.v1ListEntries>[0])
         .then((res) => res.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type DeleteCategoryFn = Api<unknown>['categories']['deleteCategory'];
+type DeleteCategoryFn = Api<unknown>['categories']['v1DeleteCategory'];
 
 export function useDeleteCategory({
   mutationKey = [],
@@ -17,6 +17,6 @@ export function useDeleteCategory({
   return useMutation({
     ...props,
     mutationKey: ['DELETE_CATEGORY_MUTATION', ...mutationKey],
-    mutationFn: (id) => api.categories.deleteCategory(id).then((res) => res.data),
+    mutationFn: (id) => api.categories.v1DeleteCategory(id).then((res) => res.data),
   });
 }

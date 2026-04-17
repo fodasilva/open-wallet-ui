@@ -35,11 +35,11 @@ export const RecurrencesList = ({ onAddClick }: { onAddClick?: () => void }) => 
     queryKey: [...recurrencesKeys.all(), api],
     queryFn: ({ pageParam = 1 }) =>
       api.recurrences
-        .listRecurrences({
+        .v1ListRecurrences({
           per_page: 25,
           page: pageParam as number,
           order_by: 'created_at:desc',
-        } as Parameters<typeof api.recurrences.listRecurrences>[0])
+        } as Parameters<typeof api.recurrences.v1ListRecurrences>[0])
         .then((res) => res.data),
     initialPageParam: 1,
     getNextPageParam: (lastPage) => {

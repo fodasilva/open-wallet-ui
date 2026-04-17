@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type DeleteTransactionFn = Api<unknown>['transactions']['deleteTransaction'];
+type DeleteTransactionFn = Api<unknown>['transactions']['v1DeleteTransaction'];
 
 export function useDeleteTransaction({
   mutationKey = [],
@@ -17,6 +17,6 @@ export function useDeleteTransaction({
   return useMutation({
     ...props,
     mutationKey: ['DELETE_TRANSACTION_MUTATION', ...mutationKey],
-    mutationFn: (id) => api.transactions.deleteTransaction(id).then((res) => res.data),
+    mutationFn: (id) => api.transactions.v1DeleteTransaction(id).then((res) => res.data),
   });
 }

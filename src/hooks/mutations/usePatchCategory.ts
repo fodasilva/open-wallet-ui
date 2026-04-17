@@ -3,7 +3,7 @@ import type { MutationOpts } from '../../utils/types';
 import { useAPI } from '../useAPI';
 import type { Api } from '../../api/api';
 
-type PatchCategoryFn = Api<unknown>['categories']['updateCategory'];
+type PatchCategoryFn = Api<unknown>['categories']['v1UpdateCategory'];
 
 export function usePatchCategory({
   mutationKey = [],
@@ -18,6 +18,6 @@ export function usePatchCategory({
     ...props,
     mutationKey: ['PATCH_CATEGORY_MUTATION', ...mutationKey],
     mutationFn: ({ id, payload }) =>
-      api.categories.updateCategory(id, payload).then((res) => res.data),
+      api.categories.v1UpdateCategory(id, payload).then((res) => res.data),
   });
 }

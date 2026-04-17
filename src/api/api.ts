@@ -492,11 +492,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Authenticates user with Google OAuth
      *
      * @tags auth
-     * @name CreateLoginWithGoogle
+     * @name V1LoginWithGoogle
      * @summary Login with Google
      * @request POST:/api/v1/auth/login/google
      */
-    createLoginWithGoogle: (
+    v1LoginWithGoogle: (
       body: InternalResourcesAuthHandlersLoginGoogleRequest,
       params: RequestParams = {},
     ) =>
@@ -517,12 +517,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description List categories
      *
      * @tags categories
-     * @name ListCategories
+     * @name V1ListCategories
      * @summary List categories
      * @request GET:/api/v1/categories
      * @secure
      */
-    listCategories: (
+    v1ListCategories: (
       query?: {
         /**
          * Page number
@@ -563,12 +563,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Create a category
      *
      * @tags categories
-     * @name CreateCategory
+     * @name V1CreateCategory
      * @summary Create a category
      * @request POST:/api/v1/categories
      * @secure
      */
-    createCategory: (
+    v1CreateCategory: (
       body: InternalResourcesCategoriesHandlersCreateCategoryRequest,
       params: RequestParams = {},
     ) =>
@@ -589,12 +589,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Delete a category
      *
      * @tags categories
-     * @name DeleteCategory
+     * @name V1DeleteCategory
      * @summary Delete Category By ID
      * @request DELETE:/api/v1/categories/{category_id}
      * @secure
      */
-    deleteCategory: (categoryId: string, params: RequestParams = {}) =>
+    v1DeleteCategory: (categoryId: string, params: RequestParams = {}) =>
       this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
         path: `/api/v1/categories/${categoryId}`,
         method: 'DELETE',
@@ -607,12 +607,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Update a category
      *
      * @tags categories
-     * @name UpdateCategory
+     * @name V1UpdateCategory
      * @summary Update Category By ID
      * @request PATCH:/api/v1/categories/{category_id}
      * @secure
      */
-    updateCategory: (
+    v1UpdateCategory: (
       categoryId: string,
       body: InternalResourcesCategoriesHandlersUpdateCategoryRequest,
       params: RequestParams = {},
@@ -634,12 +634,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description List categories with amount per period
      *
      * @tags categories
-     * @name ListCategoriesAmountPerPeriod
+     * @name V1ListCategoryAmountPerPeriod
      * @summary List categories with amount per period
      * @request GET:/api/v1/categories/{period}
      * @secure
      */
-    listCategoriesAmountPerPeriod: (
+    v1ListCategoryAmountPerPeriod: (
       period: string,
       query?: {
         /**
@@ -680,12 +680,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description List user recurrences
      *
      * @tags recurrences
-     * @name ListRecurrences
+     * @name V1ListRecurrences
      * @summary List recurrences
      * @request GET:/api/v1/recurrences
      * @secure
      */
-    listRecurrences: (
+    v1ListRecurrences: (
       query?: {
         /**
          * Page number
@@ -717,12 +717,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Create a new recurrence template
      *
      * @tags recurrences
-     * @name CreateRecurrence
+     * @name V1CreateRecurrence
      * @summary Create a recurrence
      * @request POST:/api/v1/recurrences
      * @secure
      */
-    createRecurrence: (
+    v1CreateRecurrence: (
       body: InternalResourcesRecurrencesHandlersCreateRecurrenceRequest,
       params: RequestParams = {},
     ) =>
@@ -743,12 +743,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Delete a recurrence template
      *
      * @tags recurrences
-     * @name DeleteRecurrence
+     * @name V1DeleteRecurrence
      * @summary Delete Recurrence By ID
      * @request DELETE:/api/v1/recurrences/{id}
      * @secure
      */
-    deleteRecurrence: (
+    v1DeleteRecurrence: (
       id: string,
       query?: {
         /**
@@ -772,12 +772,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Update a recurrence template
      *
      * @tags recurrences
-     * @name UpdateRecurrence
+     * @name V1UpdateRecurrence
      * @summary Update a recurrence
      * @request PATCH:/api/v1/recurrences/{id}
      * @secure
      */
-    updateRecurrence: (
+    v1UpdateRecurrence: (
       id: string,
       body: InternalResourcesRecurrencesHandlersUpdateRecurrenceRequest,
       params: RequestParams = {},
@@ -799,12 +799,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Generates entry records for all recurrence templates that don't already have one in the given period.
      *
      * @tags recurrences
-     * @name PrepareRecurrences
+     * @name V1PrepareRecurrence
      * @summary Prepare recurrences for a period
      * @request POST:/api/v1/recurrences/{period}
      * @secure
      */
-    prepareRecurrences: (period: string, params: RequestParams = {}) =>
+    v1PrepareRecurrence: (period: string, params: RequestParams = {}) =>
       this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
         path: `/api/v1/recurrences/${period}`,
         method: 'POST',
@@ -818,12 +818,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Create a transaction with all of it entries
      *
      * @tags transactions
-     * @name CreateTransaction
+     * @name V1CreateTransaction
      * @summary Create a transaction
      * @request POST:/api/v1/transactions
      * @secure
      */
-    createTransaction: (
+    v1CreateTransaction: (
       body: GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionRequest,
       params: RequestParams = {},
     ) =>
@@ -844,12 +844,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description List a detailed view of entries joined with transactions for a given period
      *
      * @tags transactions
-     * @name ListEntries
+     * @name V1ListEntries
      * @summary List entries
      * @request GET:/api/v1/transactions/entries
      * @secure
      */
-    listEntries: (
+    v1ListEntries: (
       query?: {
         /**
          * Page number
@@ -886,12 +886,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Delete a transaction and all entries related by the ID of the transaction
      *
      * @tags transactions
-     * @name DeleteTransaction
+     * @name V1DeleteTransaction
      * @summary Delete Transaction By ID
      * @request DELETE:/api/v1/transactions/{transaction_id}
      * @secure
      */
-    deleteTransaction: (transactionId: string, params: RequestParams = {}) =>
+    v1DeleteTransaction: (transactionId: string, params: RequestParams = {}) =>
       this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
         path: `/api/v1/transactions/${transactionId}`,
         method: 'DELETE',
@@ -904,12 +904,12 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @description Update a transaction
      *
      * @tags transactions
-     * @name UpdateTransaction
+     * @name V1UpdateTransaction
      * @summary Update a transaction
      * @request PATCH:/api/v1/transactions/{transaction_id}
      * @secure
      */
-    updateTransaction: (
+    v1UpdateTransaction: (
       transactionId: string,
       body: GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionRequest,
       params: RequestParams = {},
