@@ -17,69 +17,69 @@ export enum GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepository
   Recurrence = 'recurrence',
 }
 
-export interface GithubComFelipe1496OpenWalletInternalUtilsHTTPError {
-  error?: GithubComFelipe1496OpenWalletInternalUtilsHTTPErrorData;
+export interface GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData {
+  data: InternalResourcesCategoriesHandlersListCategoriesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData {
+  data: InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData {
+  data: InternalResourcesRecurrencesHandlersListRecurrencesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData {
+  data: InternalResourcesTransactionsHandlersListEntriesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData {
+  data: InternalResourcesAuthHandlersLoginGoogleResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData {
+  data: InternalResourcesCategoriesHandlersCreateCategoryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData {
+  data: InternalResourcesCategoriesHandlersUpdateCategoryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData {
+  data: InternalResourcesRecurrencesHandlersCreateRecurrenceResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData {
+  data: InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData {
+  data: InternalResourcesTransactionsHandlersCreateTransactionResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersSummaryResponseData {
+  data: InternalResourcesTransactionsHandlersSummaryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData {
+  data: InternalResourcesTransactionsHandlersUpdateTransactionResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError {
+  error?: GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPErrorData;
   status?: number;
 }
 
-export interface GithubComFelipe1496OpenWalletInternalUtilsHTTPErrorData {
+export interface GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPErrorData {
   message?: string;
   type?: string;
 }
 
-export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData {
-  data: InternalResourcesCategoriesHandlersListCategoriesResponseData;
-  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData {
-  data: InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData;
-  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData {
-  data: InternalResourcesRecurrencesHandlersListRecurrencesResponseData;
-  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData {
-  data: InternalResourcesTransactionsHandlersListEntriesResponseData;
-  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData {
-  data: InternalResourcesAuthHandlersLoginGoogleResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData {
-  data: InternalResourcesCategoriesHandlersCreateCategoryResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData {
-  data: InternalResourcesCategoriesHandlersUpdateCategoryResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData {
-  data: InternalResourcesRecurrencesHandlersCreateRecurrenceResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData {
-  data: InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData {
-  data: InternalResourcesTransactionsHandlersCreateTransactionResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersSummaryResponseData {
-  data: InternalResourcesTransactionsHandlersSummaryResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData {
-  data: InternalResourcesTransactionsHandlersUpdateTransactionResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata {
+export interface GithubComFelipe1496OpenWalletInternalUtilQuerybuilderMetadata {
   next_page: boolean;
   page: number;
   per_page: number;
@@ -588,8 +588,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/auth/login/google`,
         method: 'POST',
@@ -643,8 +643,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/categories`,
         method: 'GET',
@@ -669,8 +669,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/categories`,
         method: 'POST',
@@ -691,7 +691,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     v1DeleteCategory: (categoryId: string, params: RequestParams = {}) =>
-      this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
+      this.request<void, GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError>({
         path: `/api/v1/categories/${categoryId}`,
         method: 'DELETE',
         secure: true,
@@ -714,8 +714,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/categories/${categoryId}`,
         method: 'PATCH',
@@ -769,8 +769,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/categories/${period}`,
         method: 'GET',
@@ -824,8 +824,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/recurrences`,
         method: 'GET',
@@ -850,8 +850,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/recurrences`,
         method: 'POST',
@@ -882,7 +882,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
+      this.request<void, GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError>({
         path: `/api/v1/recurrences/${id}`,
         method: 'DELETE',
         query: query,
@@ -906,8 +906,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/recurrences/${id}`,
         method: 'PATCH',
@@ -928,7 +928,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     v1PrepareRecurrence: (period: string, params: RequestParams = {}) =>
-      this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
+      this.request<void, GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError>({
         path: `/api/v1/recurrences/${period}`,
         method: 'POST',
         secure: true,
@@ -951,8 +951,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/transactions`,
         method: 'POST',
@@ -1007,8 +1007,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/transactions/entries`,
         method: 'GET',
@@ -1049,8 +1049,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersSummaryResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersSummaryResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/transactions/summary`,
         method: 'GET',
@@ -1071,7 +1071,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     v1DeleteTransaction: (transactionId: string, params: RequestParams = {}) =>
-      this.request<void, GithubComFelipe1496OpenWalletInternalUtilsHTTPError>({
+      this.request<void, GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError>({
         path: `/api/v1/transactions/${transactionId}`,
         method: 'DELETE',
         secure: true,
@@ -1094,8 +1094,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData,
-        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+        GithubComFelipe1496OpenWalletInternalUtilResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilHttputilHTTPError
       >({
         path: `/api/v1/transactions/${transactionId}`,
         method: 'PATCH',
