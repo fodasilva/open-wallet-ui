@@ -15,14 +15,12 @@ export const ApiProvider: FC<ApiProviderProps> = ({ children, apiClient }) => {
     }
 
     const defaultApi = new Api({
-      baseURL: env().API_URL,
+      baseUrl: env().API_URL,
       securityWorker: () => {
         const token = localStorage.getItem('access_token');
         return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
       },
     });
-
-    defaultApi.instance.defaults.headers.post['Content-Type'] = 'application/json';
 
     return defaultApi;
   });

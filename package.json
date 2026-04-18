@@ -12,8 +12,8 @@
     "check:types": "tsc --noEmit -p tsconfig.app.json && tsc --noEmit -p tsconfig.node.json",
     "check:all": "npm run lint && npm run check:format && npm run check:types",
     "preview": "vite preview",
-    "dev:gen-client": "npx swagger-typescript-api generate -p http://localhost:8080/api-docs/doc.json -o ./src/api -n api.ts --http-client fetch --module-name-first-tag && npx prettier --write ./src/api/api.ts",
-    "check:api-up-to-date": "npx swagger-typescript-api generate -p https://raw.githubusercontent.com/felipe1496/open-wallet/main/docs/swagger.json -o ./src/api -n api.tmp.ts --http-client fetch --module-name-first-tag && npx prettier --write ./src/api/api.tmp.ts && diff ./src/api/api.ts ./src/api/api.tmp.ts && rm ./src/api/api.tmp.ts"
+    "dev:gen-client": "npx swagger-typescript-api generate -p http://localhost:8080/api-docs/doc.json -o ./src/api -n api.ts --fetch --module-name-first-tag && npx prettier --write ./src/api/api.ts",
+    "check:api-up-to-date": "npx swagger-typescript-api generate -p https://raw.githubusercontent.com/felipe1496/open-wallet/main/docs/swagger.json -o ./src/api -n api.tmp.ts --fetch --module-name-first-tag && npx prettier --write ./src/api/api.tmp.ts && diff ./src/api/api.ts ./src/api/api.tmp.ts && rm ./src/api/api.tmp.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -27,7 +27,6 @@
     "@radix-ui/react-tooltip": "^1.2.8",
     "@tailwindcss/vite": "^4.1.17",
     "@tanstack/react-query": "^5.90.12",
-    "axios": "^1.13.2",
     "clsx": "^2.1.1",
     "cmdk": "^1.1.1",
     "dayjs": "^1.11.19",
