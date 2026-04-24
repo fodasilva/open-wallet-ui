@@ -267,12 +267,16 @@ export const EntriesList: FC = () => {
                     break;
                   }
                   case 'installment': {
+                    const currentReferenceDate = entry.reference_date!.substring(0, 10);
+                    const initialReferenceDate = dayjs(currentReferenceDate, 'YYYY-MM-DD')
+                      .subtract(entry.installment! - 1, 'month')
+                      .format('YYYY-MM-DD');
                     const defaultValues = {
                       amount: formatCurrency(Math.abs(entry.total_amount!)),
                       name: entry.name!,
                       note: entry.description || '',
                       installments: entry.total_installments!.toString(),
-                      reference_date: entry.reference_date!,
+                      reference_date: initialReferenceDate,
                       category: null,
                     };
                     if (entry.category_id) {
