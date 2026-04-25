@@ -14,7 +14,6 @@ import { usePeriod } from '../../../hooks/usePeriod';
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../../components/commons/Tooltip';
 import { SaveIncomeDialog } from './SaveIncomeDialog';
 import { SaveSimpleExpenseDialog } from './SaveSimpleExpenseDialog';
-import { createFilter } from '../../../utils/filter';
 import { SaveInstallmentDialog } from './SaveInstallmentDialog';
 import { usePatchTransaction } from '../../../hooks/mutations/usePatchTransaction';
 import { Spinner } from '../../../components/commons/loader/Spinner';
@@ -76,7 +75,7 @@ export const EntriesList: FC = () => {
         .v1ListEntries({
           per_page: 25,
           page: pageParam as number,
-          filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
+          filter: `period eq '${periodFormatted}'`,
           order_by: 'reference_date:desc,created_at:desc',
         } as Parameters<typeof api.transactions.v1ListEntries>[0])
         .then((res) => res.data),
@@ -125,7 +124,7 @@ export const EntriesList: FC = () => {
       const queryOpts = {
         per_page: 999,
         order_by: 'reference_date:desc,created_at:desc',
-        filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
+        filter: `period eq '${periodFormatted}'`,
       };
 
       const queryKey = transactionsKeys.getEntries(queryOpts);

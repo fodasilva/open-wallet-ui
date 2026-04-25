@@ -622,11 +622,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         per_page?: number;
         /**
-         * Sort field
-         * @example "name:asc,created_at:desc"
+         * Sort field.
+         * - Allowed: name, created_at, id
+         * @example "name:asc"
          */
         order_by?: string;
-        /** Category filter */
+        /**
+         * Filter expression.
+         * - Allowed fields & ops:
+         *   - color: eq, in
+         *   - created_at: eq, gt, gte, lt, lte
+         *   - id: eq, in
+         *   - name: eq, like, in
+         *   - user_id: eq, in
+         */
         filter?: string;
         /** A category name to filter by */
         name?: string;
@@ -739,11 +748,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @default 10
          */
         per_page?: number;
-        /** Category filter */
+        /**
+         * Filter expression.
+         * - Allowed fields & ops:
+         *   - color: eq, in
+         *   - id: eq, in
+         *   - name: eq, like, in
+         *   - period: eq, in
+         *   - total_amount: eq, gt, gte, lt, lte
+         *   - user_id: eq, in
+         */
         filter?: string;
         /**
-         * Sort field
-         * @example "name:asc,created_at:desc"
+         * Sort field.
+         * - Allowed: name, total_amount, period, id
+         * @example "name:asc"
          */
         order_by?: string;
       },
@@ -784,6 +803,23 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * @default 10
          */
         per_page?: number;
+        /**
+         * Filter expression.
+         * - Allowed fields & ops:
+         *   - amount: eq, gt, gte, lt, lte
+         *   - category_id: eq, in
+         *   - created_at: eq, gt, gte, lt, lte
+         *   - id: eq, in
+         *   - name: eq, like, in
+         *   - user_id: eq, in
+         */
+        filter?: string;
+        /**
+         * Sort field.
+         * - Allowed: name, created_at, id
+         * @example "name:asc"
+         */
+        order_by?: string;
       },
       params: RequestParams = {},
     ) =>
@@ -949,8 +985,22 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          */
         per_page?: number;
         /**
-         * Sort field
-         * @example "name:asc,created_at:desc"
+         * Filter expression.
+         * - Allowed fields & ops:
+         *   - amount: eq, gt, gte, lt, lte
+         *   - category_id: eq, in
+         *   - created_at: eq, gt, gte, lt, lte
+         *   - id: eq, in
+         *   - period: eq, in, gte, lte
+         *   - reference_date: eq, gt, gte, lt, lte
+         *   - type: eq, in
+         *   - user_id: eq, in
+         */
+        filter?: string;
+        /**
+         * Sort field.
+         * - Allowed: reference_date, amount, id, created_at
+         * @example "reference_date:asc"
          */
         order_by?: string;
       },
@@ -970,7 +1020,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }),
 
     /**
-     * @description Returns total income, expense and balance for each month in the specified period range. Note: Only periods with existing transactions/entries will be returned.
+     * @description Returns total income, expense and balance for each month in the specified period range. REQUIRED: period gte 'YYYYMM' and period lte 'YYYYMM' (max 12 months range) Note: Only periods with existing transactions/entries will be returned.
      *
      * @tags transactions
      * @name V1GetSummary
@@ -979,21 +1029,20 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     v1GetSummary: (
-      query: {
+      query?: {
         /**
-         * - Required: 'period gte YYYYMM and period lte YYYYMM'
+         * Filter expression.
          * - Allowed fields & ops:
          *   - period: eq, in, gte, lte
+         *   - total_balance: eq, gt, gte, lt, lte
          *   - total_expense: eq, gt, gte, lt, lte
          *   - total_income: eq, gt, gte, lt, lte
-         *   - total_balance: eq, gt, gte, lt, lte
-         * - Rules: gte <= lte, max 12 months range
          */
-        filter: string;
+        filter?: string;
         /**
          * Sort field.
          * - Allowed: period, total_expense, total_income, total_balance
-         * @example "period:desc,total_balance:asc"
+         * @example "period:asc"
          */
         order_by?: string;
       },
