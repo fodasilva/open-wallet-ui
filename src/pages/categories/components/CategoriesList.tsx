@@ -8,7 +8,7 @@ import { useConfirm } from '../../../hooks/useConfirm';
 import { SaveCategoryDialog } from './SaveCategoryDialog';
 import { usePatchCategory } from '../../../hooks/mutations/usePatchCategory';
 import { useEffect, useRef, useState, type ComponentProps } from 'react';
-import { entriesKeys } from '../../../queries/transactions-queries';
+import { transactionsKeys } from '../../../queries/transactions-queries';
 import { useAPI } from '../../../hooks/useAPI';
 import { Spinner } from '../../../components/commons/loader/Spinner';
 
@@ -65,7 +65,7 @@ export const CategoriesList = () => {
     meta: {
       successNotification: 'Category deleted successfully',
       errorNotification: 'There was an error deleting the category',
-      invalidateQuery: [categoriesKeys.all(), entriesKeys.all()],
+      invalidateQuery: [categoriesKeys.all(), transactionsKeys.all()],
     },
   });
 

@@ -17,6 +17,7 @@ function getValue(value: any) {
   return value;
 }
 
+/** @deprecated use string manipulation instead */
 export function createFilter() {
   const and: Condition[] = [];
   const orGroups: Condition[][] = [];

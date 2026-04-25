@@ -17,160 +17,6 @@ export enum GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepository
   Recurrence = 'recurrence',
 }
 
-export interface GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategory {
-  color?: string;
-  created_at?: string;
-  id?: string;
-  name?: string;
-  user_id?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategoryAmountPerPeriod {
-  color?: string;
-  id?: string;
-  name?: string;
-  period?: string;
-  total_amount?: number;
-  user_id?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesRecurrencesRepositoryRecurrence {
-  amount?: number;
-  category_color?: string;
-  category_id?: string;
-  category_name?: string;
-  created_at?: string;
-  day_of_month?: number;
-  end_period?: string;
-  id?: string;
-  name?: string;
-  note?: string;
-  start_period?: string;
-  user_id?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateEntryRequest {
-  /**
-   * @min -999999
-   * @max 999999
-   */
-  amount: number;
-  reference_date: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionRequest {
-  category_id?: string;
-  /**
-   * @maxItems 100
-   * @minItems 1
-   */
-  entries: GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateEntryRequest[];
-  /**
-   * @minLength 1
-   * @maxLength 100
-   */
-  name: string;
-  /**
-   * @minLength 0
-   * @maxLength 400
-   */
-  note?: string;
-  type: 'installment' | 'simple_expense' | 'income';
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionResponse {
-  data?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionResponseData {
-  transaction?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryTransaction;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsListEntriesResponse {
-  data?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsListEntriesResponseData;
-  query?: GithubComFelipe1496OpenWalletInternalUtilsQueryMeta;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsListEntriesResponseData {
-  entries?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryViewEntry[];
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateEntryRequest {
-  /**
-   * @min -999999
-   * @max 999999
-   */
-  amount: number;
-  reference_date: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionRequest {
-  category_id?: string;
-  /**
-   * @maxItems 100
-   * @minItems 1
-   */
-  entries?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateEntryRequest[];
-  /**
-   * @minLength 1
-   * @maxLength 100
-   */
-  name?: string;
-  /**
-   * @minLength 0
-   * @maxLength 400
-   */
-  note?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionResponse {
-  data?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionResponseData;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionResponseData {
-  transaction?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryTransaction;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryTransaction {
-  category_id?: string;
-  created_at?: string;
-  description?: string;
-  id?: string;
-  name?: string;
-  recurrence_id?: string;
-  type?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryTransactionType;
-  user_id?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryViewEntry {
-  amount?: number;
-  category_color?: string;
-  category_id?: string;
-  category_name?: string;
-  created_at?: string;
-  description?: string;
-  id?: string;
-  installment?: number;
-  name?: string;
-  period?: string;
-  recurrence_id?: string;
-  reference_date?: string;
-  total_amount?: number;
-  total_installments?: number;
-  transaction_id?: string;
-  type?: GithubComFelipe1496OpenWalletInternalResourcesTransactionsRepositoryTransactionType;
-  user_id?: string;
-}
-
-export interface GithubComFelipe1496OpenWalletInternalResourcesUsersRepositoryUser {
-  avatar_url?: string;
-  created_at?: string;
-  email?: string;
-  id?: string;
-  name?: string;
-  username?: string;
-}
-
 export interface GithubComFelipe1496OpenWalletInternalUtilsHTTPError {
   error?: GithubComFelipe1496OpenWalletInternalUtilsHTTPErrorData;
   status?: number;
@@ -181,25 +27,96 @@ export interface GithubComFelipe1496OpenWalletInternalUtilsHTTPErrorData {
   type?: string;
 }
 
-export interface GithubComFelipe1496OpenWalletInternalUtilsQueryMeta {
-  next_page?: boolean;
-  page?: number;
-  per_page?: number;
-  total_items?: number;
-  total_pages?: number;
+export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData {
+  data: InternalResourcesCategoriesHandlersListCategoriesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData {
+  data: InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData {
+  data: InternalResourcesRecurrencesHandlersListRecurrencesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData {
+  data: InternalResourcesTransactionsHandlersListEntriesResponseData;
+  query: GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData {
+  data: InternalResourcesAuthHandlersLoginGoogleResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData {
+  data: InternalResourcesCategoriesHandlersCreateCategoryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData {
+  data: InternalResourcesCategoriesHandlersUpdateCategoryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData {
+  data: InternalResourcesRecurrencesHandlersCreateRecurrenceResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData {
+  data: InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData {
+  data: InternalResourcesTransactionsHandlersCreateTransactionResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersSummaryResponseData {
+  data: InternalResourcesTransactionsHandlersSummaryResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData {
+  data: InternalResourcesTransactionsHandlersUpdateTransactionResponseData;
+}
+
+export interface GithubComFelipe1496OpenWalletInternalUtilsQuerybuilderMetadata {
+  next_page: boolean;
+  page: number;
+  per_page: number;
+  total_items: number;
+  total_pages: number;
 }
 
 export interface InternalResourcesAuthHandlersLoginGoogleRequest {
-  code?: string;
-}
-
-export interface InternalResourcesAuthHandlersLoginGoogleResponse {
-  data?: InternalResourcesAuthHandlersLoginGoogleResponseData;
+  code: string;
 }
 
 export interface InternalResourcesAuthHandlersLoginGoogleResponseData {
-  access_token?: string;
-  user?: GithubComFelipe1496OpenWalletInternalResourcesUsersRepositoryUser;
+  access_token: string;
+  user: InternalResourcesAuthHandlersUserResource;
+}
+
+export interface InternalResourcesAuthHandlersUserResource {
+  avatar_url: string;
+  created_at: string;
+  email: string;
+  id: string;
+  name: string;
+}
+
+export interface InternalResourcesCategoriesHandlersCategoryAmountPerPeriodResource {
+  color: string;
+  id: string;
+  name: string;
+  total_amount: number;
+}
+
+export interface InternalResourcesCategoriesHandlersCategoryResource {
+  color: string;
+  created_at: string;
+  id: string;
+  name: string;
+  user_id: string;
 }
 
 export interface InternalResourcesCategoriesHandlersCreateCategoryRequest {
@@ -207,30 +124,16 @@ export interface InternalResourcesCategoriesHandlersCreateCategoryRequest {
   name: string;
 }
 
-export interface InternalResourcesCategoriesHandlersCreateCategoryResponse {
-  data?: InternalResourcesCategoriesHandlersCreateCategoryResponseData;
-}
-
 export interface InternalResourcesCategoriesHandlersCreateCategoryResponseData {
-  category?: GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategory;
-}
-
-export interface InternalResourcesCategoriesHandlersListCategoriesResponse {
-  data?: InternalResourcesCategoriesHandlersListCategoriesResponseData;
-  query?: GithubComFelipe1496OpenWalletInternalUtilsQueryMeta;
+  category: InternalResourcesCategoriesHandlersCategoryResource;
 }
 
 export interface InternalResourcesCategoriesHandlersListCategoriesResponseData {
-  categories?: GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategory[];
-}
-
-export interface InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponse {
-  data?: InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData;
-  query?: GithubComFelipe1496OpenWalletInternalUtilsQueryMeta;
+  categories: InternalResourcesCategoriesHandlersCategoryResource[];
 }
 
 export interface InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData {
-  categories?: GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategoryAmountPerPeriod[];
+  categories: InternalResourcesCategoriesHandlersCategoryAmountPerPeriodResource[];
 }
 
 export interface InternalResourcesCategoriesHandlersUpdateCategoryRequest {
@@ -242,12 +145,8 @@ export interface InternalResourcesCategoriesHandlersUpdateCategoryRequest {
   name?: string;
 }
 
-export interface InternalResourcesCategoriesHandlersUpdateCategoryResponse {
-  data?: InternalResourcesCategoriesHandlersUpdateCategoryResponseData;
-}
-
 export interface InternalResourcesCategoriesHandlersUpdateCategoryResponseData {
-  category?: GithubComFelipe1496OpenWalletInternalResourcesCategoriesRepositoryCategory;
+  category: InternalResourcesCategoriesHandlersCategoryResource;
 }
 
 export interface InternalResourcesRecurrencesHandlersCreateRecurrenceRequest {
@@ -272,21 +171,27 @@ export interface InternalResourcesRecurrencesHandlersCreateRecurrenceRequest {
   start_period: string;
 }
 
-export interface InternalResourcesRecurrencesHandlersCreateRecurrenceResponse {
-  data?: InternalResourcesRecurrencesHandlersCreateRecurrenceResponseData;
-}
-
 export interface InternalResourcesRecurrencesHandlersCreateRecurrenceResponseData {
-  recurrence?: GithubComFelipe1496OpenWalletInternalResourcesRecurrencesRepositoryRecurrence;
-}
-
-export interface InternalResourcesRecurrencesHandlersListRecurrencesResponse {
-  data?: InternalResourcesRecurrencesHandlersListRecurrencesResponseData;
-  query?: GithubComFelipe1496OpenWalletInternalUtilsQueryMeta;
+  recurrence: InternalResourcesRecurrencesHandlersRecurrenceResource;
 }
 
 export interface InternalResourcesRecurrencesHandlersListRecurrencesResponseData {
-  recurrences?: GithubComFelipe1496OpenWalletInternalResourcesRecurrencesRepositoryRecurrence[];
+  recurrences: InternalResourcesRecurrencesHandlersRecurrenceResource[];
+}
+
+export interface InternalResourcesRecurrencesHandlersRecurrenceResource {
+  amount: number;
+  category_color?: string;
+  category_id?: string;
+  category_name?: string;
+  created_at: string;
+  day_of_month: number;
+  end_period?: string;
+  id: string;
+  name: string;
+  note?: string;
+  start_period: string;
+  user_id: string;
 }
 
 export interface InternalResourcesRecurrencesHandlersUpdateRecurrenceRequest {
@@ -311,12 +216,121 @@ export interface InternalResourcesRecurrencesHandlersUpdateRecurrenceRequest {
   start_period?: string;
 }
 
-export interface InternalResourcesRecurrencesHandlersUpdateRecurrenceResponse {
-  data?: InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData;
+export interface InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData {
+  recurrence: InternalResourcesRecurrencesHandlersRecurrenceResource;
 }
 
-export interface InternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData {
-  recurrence?: GithubComFelipe1496OpenWalletInternalResourcesRecurrencesRepositoryRecurrence;
+export interface InternalResourcesTransactionsHandlersCreateEntryRequest {
+  /**
+   * @min -999999
+   * @max 999999
+   */
+  amount: number;
+  reference_date: string;
+}
+
+export interface InternalResourcesTransactionsHandlersCreateTransactionRequest {
+  category_id?: string;
+  /**
+   * @maxItems 100
+   * @minItems 1
+   */
+  entries: InternalResourcesTransactionsHandlersCreateEntryRequest[];
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name: string;
+  /**
+   * @minLength 0
+   * @maxLength 400
+   */
+  note?: string;
+  type: 'installment' | 'simple_expense' | 'income';
+}
+
+export interface InternalResourcesTransactionsHandlersCreateTransactionResponseData {
+  transaction: InternalResourcesTransactionsHandlersTransactionResource;
+}
+
+export interface InternalResourcesTransactionsHandlersEntryResource {
+  amount: number;
+  category_color?: string;
+  category_id?: string;
+  category_name?: string;
+  created_at: string;
+  description?: string;
+  id: string;
+  installment: number;
+  name: string;
+  period: string;
+  recurrence_id?: string;
+  reference_date: string;
+  total_amount: number;
+  total_installments: number;
+  transaction_id: string;
+  type: string;
+  user_id: string;
+}
+
+export interface InternalResourcesTransactionsHandlersListEntriesResponseData {
+  entries: InternalResourcesTransactionsHandlersEntryResource[];
+}
+
+export interface InternalResourcesTransactionsHandlersMonthlySummaryResource {
+  balance: number;
+  expense: number;
+  income: number;
+  period: string;
+}
+
+export interface InternalResourcesTransactionsHandlersSummaryResponseData {
+  summary: InternalResourcesTransactionsHandlersMonthlySummaryResource[];
+}
+
+export interface InternalResourcesTransactionsHandlersTransactionResource {
+  category_color?: string;
+  category_id?: string;
+  category_name?: string;
+  created_at: string;
+  description?: string;
+  id: string;
+  name: string;
+  recurrence_id?: string;
+  type: string;
+  user_id: string;
+}
+
+export interface InternalResourcesTransactionsHandlersUpdateEntryRequest {
+  /**
+   * @min -999999
+   * @max 999999
+   */
+  amount: number;
+  reference_date: string;
+}
+
+export interface InternalResourcesTransactionsHandlersUpdateTransactionRequest {
+  category_id?: string;
+  /**
+   * @maxItems 100
+   * @minItems 1
+   */
+  entries?: InternalResourcesTransactionsHandlersUpdateEntryRequest[];
+  /**
+   * @minLength 1
+   * @maxLength 100
+   */
+  name?: string;
+  /**
+   * @minLength 0
+   * @maxLength 400
+   */
+  note?: string;
+}
+
+export interface InternalResourcesTransactionsHandlersUpdateTransactionResponseData {
+  transaction: InternalResourcesTransactionsHandlersTransactionResource;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -574,7 +588,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesAuthHandlersLoginGoogleResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesAuthHandlersLoginGoogleResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/auth/login/google`,
@@ -620,7 +634,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesCategoriesHandlersListCategoriesResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoriesResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/categories`,
@@ -646,7 +660,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesCategoriesHandlersCreateCategoryResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersCreateCategoryResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/categories`,
@@ -691,7 +705,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesCategoriesHandlersUpdateCategoryResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesCategoriesHandlersUpdateCategoryResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/categories/${categoryId}`,
@@ -736,7 +750,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesCategoriesHandlersListCategoryAmountPerPeriodResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/categories/${period}`,
@@ -774,7 +788,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesRecurrencesHandlersListRecurrencesResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesRecurrencesHandlersListRecurrencesResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/recurrences`,
@@ -800,7 +814,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesRecurrencesHandlersCreateRecurrenceResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersCreateRecurrenceResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/recurrences`,
@@ -856,7 +870,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        InternalResourcesRecurrencesHandlersUpdateRecurrenceResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesRecurrencesHandlersUpdateRecurrenceResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/recurrences/${id}`,
@@ -897,11 +911,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     v1CreateTransaction: (
-      body: GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionRequest,
+      body: InternalResourcesTransactionsHandlersCreateTransactionRequest,
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalResourcesTransactionsCreateTransactionResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersCreateTransactionResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/transactions`,
@@ -943,10 +957,53 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalResourcesTransactionsListEntriesResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsPaginatedResponseInternalResourcesTransactionsHandlersListEntriesResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/transactions/entries`,
+        method: 'GET',
+        query: query,
+        secure: true,
+        type: ContentType.Json,
+        format: 'json',
+        ...params,
+      }),
+
+    /**
+     * @description Returns total income, expense and balance for each month in the specified period range. Note: Only periods with existing transactions/entries will be returned.
+     *
+     * @tags transactions
+     * @name V1GetSummary
+     * @summary Get financial summary grouped by month
+     * @request GET:/api/v1/transactions/summary
+     * @secure
+     */
+    v1GetSummary: (
+      query: {
+        /**
+         * - Required: 'period gte YYYYMM and period lte YYYYMM'
+         * - Allowed fields & ops:
+         *   - period: eq, in, gte, lte
+         *   - total_expense: eq, gt, gte, lt, lte
+         *   - total_income: eq, gt, gte, lt, lte
+         *   - total_balance: eq, gt, gte, lt, lte
+         * - Rules: gte <= lte, max 12 months range
+         */
+        filter: string;
+        /**
+         * Sort field.
+         * - Allowed: period, total_expense, total_income, total_balance
+         * @example "period:desc,total_balance:asc"
+         */
+        order_by?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersSummaryResponseData,
+        GithubComFelipe1496OpenWalletInternalUtilsHTTPError
+      >({
+        path: `/api/v1/transactions/summary`,
         method: 'GET',
         query: query,
         secure: true,
@@ -984,11 +1041,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     v1UpdateTransaction: (
       transactionId: string,
-      body: GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionRequest,
+      body: InternalResourcesTransactionsHandlersUpdateTransactionRequest,
       params: RequestParams = {},
     ) =>
       this.request<
-        GithubComFelipe1496OpenWalletInternalResourcesTransactionsUpdateTransactionResponse,
+        GithubComFelipe1496OpenWalletInternalUtilsResponseDataInternalResourcesTransactionsHandlersUpdateTransactionResponseData,
         GithubComFelipe1496OpenWalletInternalUtilsHTTPError
       >({
         path: `/api/v1/transactions/${transactionId}`,

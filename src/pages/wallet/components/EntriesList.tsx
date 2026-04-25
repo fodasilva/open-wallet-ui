@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ComponentProps, type FC } from 'react';
 import { useQueryClient, useSuspenseInfiniteQuery, useSuspenseQuery } from '@tanstack/react-query';
-import { entriesKeys } from '../../../queries/transactions-queries';
+import { transactionsKeys } from '../../../queries/transactions-queries';
 import dayjs from 'dayjs';
 import { useConfirm } from '../../../hooks/useConfirm';
 import { useDeleteTransaction } from '../../../hooks/mutations/useDeleteTransaction';
@@ -60,7 +60,7 @@ export const EntriesList: FC = () => {
     meta: {
       successNotification: 'Transaction updated successfully',
       errorNotification: 'There was an error updating the transaction',
-      invalidateQuery: [entriesKeys.all()],
+      invalidateQuery: [transactionsKeys.all()],
     },
   });
 
@@ -70,7 +70,7 @@ export const EntriesList: FC = () => {
     hasNextPage,
     isFetchingNextPage,
   } = useSuspenseInfiniteQuery({
-    queryKey: [...entriesKeys.all(), periodFormatted, api],
+    queryKey: [...transactionsKeys.all(), periodFormatted, api],
     queryFn: ({ pageParam = 1 }) =>
       api.transactions
         .v1ListEntries({
@@ -128,9 +128,9 @@ export const EntriesList: FC = () => {
         filter: createFilter().and('period', 'eq', periodFormatted).toURL(),
       };
 
-      const queryKey = entriesKeys.getEntries(queryOpts);
+      const queryKey = transactionsKeys.getEntries(queryOpts);
 
-      await queryClient.cancelQueries({ queryKey: entriesKeys.all() });
+      await queryClient.cancelQueries({ queryKey: transactionsKeys.all() });
 
       const previousData = queryClient.getQueryData(queryKey);
 
@@ -163,7 +163,7 @@ export const EntriesList: FC = () => {
     },
     meta: {
       errorNotification: 'An error occurred while deleting the transaction',
-      invalidateQuery: [entriesKeys.all()],
+      invalidateQuery: [transactionsKeys.all()],
     },
   });
 
