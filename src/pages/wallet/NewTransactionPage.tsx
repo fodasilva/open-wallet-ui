@@ -2,7 +2,7 @@ import { useState, type FC } from 'react';
 import { Page } from '../../components/commons/Page';
 import { useNavigate } from 'react-router';
 import { ROUTES } from '../../constants/routes';
-import { entriesKeys } from '../../queries/transactions-queries';
+import { transactionsKeys } from '../../queries/transactions-queries';
 import { Card } from '../../components/commons/Card';
 import { BanknoteArrowDownIcon, BanknoteArrowUpIcon, SquareDivideIcon } from 'lucide-react';
 import { parseUSD } from '../../utils/functions';
@@ -28,7 +28,7 @@ export const NewTransactionPage: FC = () => {
     meta: {
       successNotification: 'Transaction created successfully',
       errorNotification: 'There was an error creating the transaction',
-      invalidateQuery: [entriesKeys.all()],
+      invalidateQuery: [transactionsKeys.all()],
     },
   });
 
