@@ -20,6 +20,7 @@ import { Spinner } from '../../../components/commons/loader/Spinner';
 
 import { useAPI } from '../../../hooks/useAPI';
 import type { Entry, ListEntriesResponse } from '../../../queries/transactions-queries';
+import { useLoader } from '../../../hooks/useLoader';
 
 export const EntriesList: FC = () => {
   const api = useAPI();
@@ -168,6 +169,8 @@ export const EntriesList: FC = () => {
 
   const entries = Object.entries(entriesData);
 
+  const setIsLoading = useLoader((state) => state.setIsLoading);
+
   function getEntryData(entry: Entry) {
     return {
       category() {
@@ -210,7 +213,7 @@ export const EntriesList: FC = () => {
             <Button
               size="sm"
               variant="outlined"
-              onClick={() => {
+              onClick={async () => {
                 switch (entry.type) {
                   case 'simple_expense': {
                     const defaultValues = {
@@ -267,10 +270,25 @@ export const EntriesList: FC = () => {
                     break;
                   }
                   case 'installment': {
-                    const currentReferenceDate = entry.reference_date!.substring(0, 10);
-                    const initialReferenceDate = dayjs(currentReferenceDate, 'YYYY-MM-DD')
-                      .subtract(entry.installment! - 1, 'month')
-                      .format('YYYY-MM-DD');
+                    setIsLoading(true);
+                    let installmentEntries: Entry[] = [];
+                    try {
+                      installmentEntries = await queryClient.fetchQuery({
+                        queryKey: ['installment-entries', entry.transaction_id],
+                        queryFn: async () => {
+                          return api.transactions
+                            .v1ListEntries({
+                              filter: `transaction_id eq '${entry.transaction_id}'`,
+                              order_by: 'reference_date:asc',
+                            })
+                            .then((res) => res.data.data?.entries || []);
+                        },
+                      });
+                    } finally {
+                      setIsLoading(false);
+                    }
+                    const initialReferenceDate =
+                      installmentEntries[0]?.reference_date?.substring(0, 10) ?? '';
                     const defaultValues = {
                       amount: formatCurrency(Math.abs(entry.total_amount!)),
                       name: entry.name!,
