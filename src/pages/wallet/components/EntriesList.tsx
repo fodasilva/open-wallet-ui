@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 import { useConfirm } from '../../../hooks/useConfirm';
 import { useDeleteTransaction } from '../../../hooks/mutations/useDeleteTransaction';
 import { Card } from '../../../components/commons/Card';
-import { cn, formatCurrency, parseUSD } from '../../../utils/functions';
+import { cn, parseUSD } from '../../../utils/functions';
 import { Button } from '../../../components/commons/Button';
 import { SquarePenIcon, TrashIcon } from 'lucide-react';
 import { Link } from 'react-router';
@@ -17,6 +17,7 @@ import { SaveSimpleExpenseDialog } from './SaveSimpleExpenseDialog';
 import { SaveInstallmentDialog } from './SaveInstallmentDialog';
 import { usePatchTransaction } from '../../../hooks/mutations/usePatchTransaction';
 import { Spinner } from '../../../components/commons/loader/Spinner';
+import { createStrategy } from './StrategyPattern';
 
 import { useAPI } from '../../../hooks/useAPI';
 import type { Entry, ListEntriesResponse } from '../../../queries/transactions-queries';
@@ -170,6 +171,18 @@ export const EntriesList: FC = () => {
   const entries = Object.entries(entriesData);
 
   const setIsLoading = useLoader((state) => state.setIsLoading);
+  const handleEdit = (entry: Entry) => {
+    const strategies = createStrategy({
+      setIsEditingExpense,
+      setIsEditingIncome,
+      setIsEditingInstallment,
+      setIsLoading,
+      queryClient,
+      api,
+    });
+
+    return strategies[entry.type]?.(entry);
+  };
 
   function getEntryData(entry: Entry) {
     return {
@@ -210,117 +223,7 @@ export const EntriesList: FC = () => {
       actions() {
         return (
           <>
-            <Button
-              size="sm"
-              variant="outlined"
-              onClick={async () => {
-                switch (entry.type) {
-                  case 'simple_expense': {
-                    const defaultValues = {
-                      name: entry.name!,
-                      amount: formatCurrency(Math.abs(entry.amount!)),
-                      description: entry.description || '',
-                      date: entry.reference_date!.substring(0, 10),
-                      category: null,
-                    };
-                    if (entry.category_id) {
-                      Object.assign(defaultValues, {
-                        category: {
-                          id: entry.category_id,
-                          value: {
-                            id: entry.category_id,
-                            name: entry.category_name,
-                            color: entry.category_color,
-                          },
-                          label: entry.category_name,
-                        },
-                      });
-                    }
-                    setIsEditingExpense({
-                      id: entry.transaction_id!,
-                      defaultValues,
-                    });
-                    break;
-                  }
-                  case 'income': {
-                    const defaultValues = {
-                      name: entry.name!,
-                      amount: formatCurrency(Math.abs(entry.amount!)),
-                      description: entry.description || '',
-                      date: entry.reference_date!.substring(0, 10),
-                      category: null,
-                    };
-                    if (entry.category_id) {
-                      Object.assign(defaultValues, {
-                        category: {
-                          id: entry.category_id,
-                          value: {
-                            id: entry.category_id,
-                            name: entry.category_name,
-                            color: entry.category_color,
-                          },
-                          label: entry.category_name,
-                        },
-                      });
-                    }
-                    setIsEditingIncome({
-                      id: entry.transaction_id!,
-                      defaultValues,
-                    });
-                    break;
-                  }
-                  case 'installment': {
-                    setIsLoading(true);
-                    let installmentEntries: Entry[] = [];
-                    try {
-                      installmentEntries = await queryClient.fetchQuery({
-                        queryKey: ['installment-entries', entry.transaction_id],
-                        queryFn: async () => {
-                          return api.transactions
-                            .v1ListEntries({
-                              filter: `transaction_id eq '${entry.transaction_id}'`,
-                              order_by: 'reference_date:asc',
-                            })
-                            .then((res) => res.data.data?.entries || []);
-                        },
-                      });
-                    } finally {
-                      setIsLoading(false);
-                    }
-                    const initialReferenceDate =
-                      installmentEntries[0]?.reference_date?.substring(0, 10) ?? '';
-                    const defaultValues = {
-                      amount: formatCurrency(Math.abs(entry.total_amount!)),
-                      name: entry.name!,
-                      note: entry.description || '',
-                      installments: entry.total_installments!.toString(),
-                      reference_date: initialReferenceDate,
-                      category: null,
-                    };
-                    if (entry.category_id) {
-                      Object.assign(defaultValues, {
-                        category: {
-                          id: entry.category_id,
-                          value: {
-                            id: entry.category_id,
-                            name: entry.category_name,
-                            color: entry.category_color,
-                          },
-                          label: entry.category_name,
-                        },
-                      });
-                    }
-                    setIsEditingInstallment({
-                      transaction_id: entry.transaction_id!,
-                      defaultValues,
-                    });
-                    break;
-                  }
-                  default:
-                    break;
-                }
-              }}
-            >
+            <Button size="sm" variant="outlined" onClick={() => handleEdit(entry)}>
               <SquarePenIcon className="size-4" />
             </Button>
             <Button
