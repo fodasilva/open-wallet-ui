@@ -29,7 +29,10 @@ export const NewTransactionPage: FC = () => {
     variables: postTransactionVariables,
   } = usePostTransaction({
     onSuccess: () => {
-      navigate(ROUTES.WALLET.INDEX);
+      navigate({
+        pathname: ROUTES.WALLET.INDEX,
+        search: `?p=${dayjs(`${period.year}${period.month + 1}`).format('YYYYMM')}`,
+      });
     },
     meta: {
       successNotification: 'Transaction created successfully',
