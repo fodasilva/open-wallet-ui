@@ -21,7 +21,7 @@ import { AsyncSelectCategory } from '../../../components/AsyncSelectCategory';
 import { Spinner } from '../../../components/commons/loader/Spinner';
 
 interface Props {
-  defaultValues?: Form;
+  defaultValues?: Partial<Form>;
   onSave: (data: Form, { reset }: { reset: () => void }) => void;
   isLoading?: boolean;
   isVisible?: boolean;
@@ -61,7 +61,7 @@ export const SaveSimpleExpenseDialog: FCC<Props> = ({
     reset,
     control,
   } = useForm<Form>({
-    defaultValues,
+    defaultValues: { ...initialDefaultValues, ...defaultValues },
     resolver: zodResolver(schema),
   });
 

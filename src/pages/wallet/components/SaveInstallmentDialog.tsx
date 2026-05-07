@@ -25,7 +25,7 @@ import { useState } from 'react';
 import { Spinner } from '../../../components/commons/loader/Spinner';
 
 interface Props {
-  defaultValues?: Form;
+  defaultValues?: Partial<Form>;
   previewDefaultValues?: PreviewForm;
   onSave: (data: Form & PreviewForm, { reset }: { reset: () => void }) => void;
   isVisible?: boolean;
@@ -95,7 +95,7 @@ export const SaveInstallmentDialog: FCC<Props> = ({
     control,
     reset,
   } = useForm<Form>({
-    defaultValues,
+    defaultValues: { ...initialDefaultValues, ...defaultValues },
     resolver: zodResolver(schema),
   });
 
