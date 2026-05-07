@@ -10,13 +10,19 @@ import { SaveSimpleExpenseDialog } from './components/SaveSimpleExpenseDialog';
 import { SaveIncomeDialog } from './components/SaveIncomeDialog';
 import { SaveInstallmentDialog } from './components/SaveInstallmentDialog';
 import { usePostTransaction } from '../../hooks/mutations/usePostTransaction';
+import { usePeriod } from '../../hooks/usePeriod';
+import dayjs from 'dayjs';
 
 export const NewTransactionPage: FC = () => {
   const [simpleExpenseIsVisible, setSimpleExpenseIsVisible] = useState(false);
   const [incomeIsVisible, setIncomeIsVisible] = useState(false);
   const [installmentIsVisible, setInstallmentIsVisible] = useState(false);
   const navigate = useNavigate();
-
+  const { period } = usePeriod();
+  const date =
+    dayjs(`${period.year}-${period.month + 1}`).format('YYYY-MM') === dayjs().format('YYYY-MM')
+      ? dayjs().format('YYYY-MM-DD')
+      : dayjs(`${period.year}-${period.month + 1}-01`).format('YYYY-MM-DD');
   const {
     mutate: postTransaction,
     isPending: isPostTransactionPending,
@@ -45,6 +51,7 @@ export const NewTransactionPage: FC = () => {
         >
           <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
             <SaveSimpleExpenseDialog
+              defaultValues={{ date: date }}
               isVisible={simpleExpenseIsVisible}
               onClose={() => setSimpleExpenseIsVisible(false)}
               onSave={(data, { reset }) => {
@@ -85,6 +92,7 @@ export const NewTransactionPage: FC = () => {
             </button>
 
             <SaveIncomeDialog
+              defaultValues={{ date: date }}
               isVisible={incomeIsVisible}
               onClose={() => setIncomeIsVisible(false)}
               onSave={(data, { reset }) => {
@@ -122,6 +130,7 @@ export const NewTransactionPage: FC = () => {
             </button>
 
             <SaveInstallmentDialog
+              defaultValues={{ reference_date: date }}
               isVisible={installmentIsVisible}
               onClose={() => setInstallmentIsVisible(false)}
               onSave={(data, { reset }) => {
