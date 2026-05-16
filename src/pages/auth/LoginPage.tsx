@@ -36,6 +36,16 @@ export const LoginPage: FC = () => {
     }
   }, [googleCallback, loginGoogle, navigate, sessionUser, setSearchParams]);
 
+  useEffect(() => {
+    const reason = sessionStorage.getItem('logout_reason');
+
+    if (reason === 'token_expired') {
+      toast.error('Your session has expired. Please log in again.');
+    }
+
+    sessionStorage.removeItem('logout_reason');
+  }, []);
+
   if (sessionUser) {
     return null;
   }

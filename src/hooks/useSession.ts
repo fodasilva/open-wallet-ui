@@ -9,7 +9,7 @@ interface States {
 
 interface Actions {
   login: (user: SessionUser, accessToken?: string) => void;
-  logout: () => void;
+  logout: (logoutReason?: string) => void;
   startUpSession: () => void;
 }
 
@@ -27,9 +27,14 @@ export const useSession = createStore<States & Actions>()((set) => ({
     localStorage.setItem('session_user', JSON.stringify(user));
     set({ sessionUser: user });
   },
-  logout: () => {
+  logout: (logoutReason?: string) => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('session_user');
+
+    if (logoutReason) {
+      sessionStorage.setItem('logout_reason', logoutReason);
+    }
+
     set({ sessionUser: null });
   },
   startUpSession: () => {

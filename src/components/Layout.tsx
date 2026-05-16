@@ -14,9 +14,17 @@ export const Layout: FC = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!sessionUser) {
-      navigate(ROUTES.LOGIN);
+    if (sessionUser) {
+      return;
     }
+
+    const logoutReason = sessionStorage.getItem('logout_reason');
+    if (logoutReason === 'token_expired') {
+      window.location.replace(ROUTES.LOGIN);
+      return;
+    }
+
+    navigate(ROUTES.LOGIN, { replace: true });
   }, [sessionUser, navigate]);
 
   if (!sessionUser) {

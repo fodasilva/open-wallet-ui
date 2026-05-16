@@ -25,7 +25,7 @@ export const ApiProvider: FC<ApiProviderProps> = ({ children, apiClient }) => {
         const response = await fetch(...fetchParams);
 
         if (response.status === 401) {
-          useSession.getState().logout();
+          useSession.getState().logout('token_expired');
         }
         return response;
       },
