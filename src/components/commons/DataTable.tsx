@@ -45,11 +45,14 @@ export const DataTable = <T,>({ columns, data, isLoading = false, getRowProps }:
       const { className: rowClassName, ...rest } = rowProps;
       return (
         <tr key={`table-row-${rowIndex}`} {...rest} className={cn(rowClassName)}>
-          {columns.map((column) => (
-            <td key={`table-cell-${rowIndex}-${String(column.id)}`} className={cn('px-3 py-0.5')}>
-              {column.render ? column.render(row) : null}
-            </td>
-          ))}
+          {columns.map((column) => {
+            const padding = rowIndex === data.length - 1 ? 'px-3 py-1' : 'px-3 pt-1';
+            return (
+              <td key={`table-cell-${rowIndex}-${String(column.id)}`} className={cn(padding)}>
+                {column.render ? column.render(row) : null}
+              </td>
+            );
+          })}
         </tr>
       );
     });
